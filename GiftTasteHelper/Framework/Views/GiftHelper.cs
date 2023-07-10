@@ -150,6 +150,7 @@ namespace GiftTasteHelper.Framework
             int numItemsToDraw = CalculateNumberOfGiftsToDisplay(drawData.Gifts.Length, this.GiftConfig.MaxGiftsToDisplay);
             if (numItemsToDraw == 0 && this.GiftConfig.HideTooltipWhenNoGiftsKnown)
             {
+                GiftTasteHelper.StardewAccessApi.MenuSuffixText = "";
                 return;
             }
 
@@ -216,6 +217,7 @@ namespace GiftTasteHelper.Framework
             textOffset.X += scaledSpriteSize.X + padding;
             textOffset.Y += rowHeight;
             spriteOffset.Y += rowHeight;
+            string toSpeak = TooltipTitle() + ": ";
 
             // Draw all the items
             for (int i = 0; i < numItemsToDraw; ++i)
@@ -225,6 +227,7 @@ namespace GiftTasteHelper.Framework
 
                 // Draw the sprite for the item then the item text
                 var textColor = gift.Universal && this.GiftConfig.ColorizeUniversalGiftNames ? Color.Blue : Game1.textColor;
+                toSpeak += item.DisplayName + ", ";
                 this.DrawText(item.DisplayName, textOffset, textColor);
                 this.DrawTexture(Game1.objectSpriteSheet, spriteOffset, item.TileSheetSourceRect, spriteScale);
 
@@ -232,6 +235,7 @@ namespace GiftTasteHelper.Framework
                 spriteOffset.Y += rowHeight;
                 textOffset.Y += rowHeight;
             }
+            GiftTasteHelper.StardewAccessApi.MenuSuffixText = toSpeak;
         }
 
         protected virtual void AdjustTooltipPosition(ref int x, ref int y, int width, int height, int viewportW, int viewportHeight)

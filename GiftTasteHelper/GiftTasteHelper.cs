@@ -25,6 +25,12 @@ namespace GiftTasteHelper
         private bool WasResized;
         private bool CheckGiftGivenNextInput = false;
 
+        public static IStardewAccessApi StardewAccessApi 
+        { 
+            get; 
+            private set; 
+        }
+
         /*********
         ** Public methods
         *********/
@@ -38,6 +44,7 @@ namespace GiftTasteHelper
             // Set the monitor ref so we can have a cheeky global log function
             Utils.InitLog(this.Monitor);
 
+            helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
             helper.Events.Display.WindowResized += (sender, e) => this.WasResized = true;
             helper.Events.GameLoop.SaveLoaded += (sender, e) => Initialize();
             helper.Events.GameLoop.ReturnedToTitle += (sender, e) => Shutdown();
@@ -46,6 +53,15 @@ namespace GiftTasteHelper
             InitDebugCommands(this.Helper);
 
             Startup();
+        }
+
+        private void OnGameLaunched(object sender, GameLaunchedEventArgs e)
+        {
+            StardewAccessApi = Helper.ModRegistry.GetApi<IStardewAccessApi>("shoaib.stardewaccess");
+            if (StardewAccessApi != null)
+            {
+                Debug.Print("SV Access Loaded!");
+            }
         }
 
         // Called when the mod starts up or is being hot-reloaded.
@@ -281,6 +297,10 @@ namespace GiftTasteHelper
             if (this.CurrentGiftHelper.CanDraw())
             {
                 this.CurrentGiftHelper.OnDraw();
+            }
+            else
+            {
+                GiftTasteHelper.StardewAccessApi.MenuSuffixText = "";
             }
         }
 
