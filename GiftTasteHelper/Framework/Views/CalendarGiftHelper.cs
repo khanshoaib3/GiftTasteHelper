@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -88,6 +89,15 @@ namespace GiftTasteHelper.Framework
             this.Calendar.IsOpen = false;
 
             base.OnClose();
+        }
+
+        public override bool IsCorrectMenuTab()
+        {
+            if (Game1.activeClickableMenu is Billboard billboard)
+                return !(bool?)typeof(Billboard).GetField("dailyQuestBoard", BindingFlags.Instance | BindingFlags.NonPublic)
+                    ?.GetValue(billboard) ?? false;
+            
+            return false;
         }
 
         public override void OnCursorMoved(CursorMovedEventArgs e)

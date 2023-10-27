@@ -78,6 +78,11 @@ namespace GiftTasteHelper.Framework
             this.IsOpen = false;
         }
 
+        public virtual bool IsCorrectMenuTab()
+        {
+            return false;
+        }
+
         public virtual bool CanTick()
         {
             return true;
@@ -235,7 +240,7 @@ namespace GiftTasteHelper.Framework
                 spriteOffset.Y += rowHeight;
                 textOffset.Y += rowHeight;
             }
-            GiftTasteHelper.StardewAccessApi.MenuSuffixText = toSpeak;
+            GiftTasteHelper.StardewAccessApi.MenuSuffixText = "\n" + toSpeak;
         }
 
         protected virtual void AdjustTooltipPosition(ref int x, ref int y, int width, int height, int viewportW, int viewportHeight)

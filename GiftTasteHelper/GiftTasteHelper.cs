@@ -298,7 +298,7 @@ namespace GiftTasteHelper
             {
                 this.CurrentGiftHelper.OnDraw();
             }
-            else
+            else if (this.CurrentGiftHelper.IsCorrectMenuTab())
             {
                 GiftTasteHelper.StardewAccessApi.MenuSuffixText = "";
             }

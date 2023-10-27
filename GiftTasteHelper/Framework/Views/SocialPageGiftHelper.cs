@@ -82,6 +82,11 @@ namespace GiftTasteHelper.Framework
                 x = viewportW - width;
         }
 
+        public override bool IsCorrectMenuTab()
+        {
+            return IsCorrectMenuTab(Game1.activeClickableMenu);
+        }
+        
         private bool IsCorrectMenuTab(IClickableMenu menu)
         {
             if (menu is GameMenu gameMenu)

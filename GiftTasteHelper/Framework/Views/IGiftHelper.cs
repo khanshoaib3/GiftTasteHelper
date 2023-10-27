@@ -33,5 +33,8 @@ namespace GiftTasteHelper.Framework
         /// <summary>Indicates if this helper wants to receive OnPostUpdate events.</summary>
         bool WantsUpdateEvent();
         void OnPostUpdate(UpdateTickedEventArgs e);
+
+
+        bool IsCorrectMenuTab();
     }
 }
